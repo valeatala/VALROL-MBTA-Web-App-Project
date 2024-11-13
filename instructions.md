@@ -1,5 +1,7 @@
 # MBTA Web App Project - Instructions
 
+## My Notes: Use two different API's one is for the coordinates of the location!!
+
 ## Introduction
 
 Welcome to the MBTA Web App project!

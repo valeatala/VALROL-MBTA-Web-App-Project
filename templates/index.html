@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi</title>
-  </head>
-
-  <body>
-    <h1>Hi</h1>
-    <p>This is an amazing app to help you find the nearest MBTA station</p>
-  </body>
+<html lang ="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Find Nearest MBTA Station, know if the station is wheelchair friendly, as well the nearest coffee shops</title>
+    </head>
+    
+    <body>
+        <h1>Hello User, Welcome to the MBTA Location App Homepage</h1>
+        <p>This app is going to help you find your nearest MBTA Station, as well as some coffee shops within a radius of 300 meters.</p>
+        <p>The MBTA Station chosen will specify if it is wheelchair friendly.</p>
+        <form action="/nearby_station" method="POST">
+            <label for="place">Enter Address:</label>
+            <input type="text" id="place" name="place" required>
+            <button type="submit">Station Search</button>
+        <form>
+    </body>
 </html>

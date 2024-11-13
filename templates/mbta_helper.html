@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>MBTA Station Wheelchair Status</title>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+
+    <body>
+        <h1>Nearest MBTA Station and Coffee Shops</h1>
+        <p>Your Location: {{ place }}</p>
+        <h2>Nearest MBTA Station</h2>
+        <p>Your nearest MBTA Station is: {{station_name}}</p>
+        <p>Wheelchair Friendly: {{accessible_message}}</p>
+
+        <h2>Nearby Coffee Shops</h2>
+        {% if coffee_shops %}
+            <ul>
+                {% for shop in coffee_shops %}
+                    <li>{{ shop[0] }} - {{ shop[1] }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>There are no coffee shops within a 300 meter radius.</p>
+        {% endif %}
+
+        <p><a href="/">Return to main page here</a></p>
+    </body>
+</html>
