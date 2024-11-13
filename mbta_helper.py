@@ -2,6 +2,7 @@ import os
 import urllib.request
 from dotenv import load_dotenv
 import json
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -19,10 +20,18 @@ GOOGLE_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 
 # A little bit of scaffolding if you want to use it
 def get_json(url: str) -> dict:
-    
+    response = requests.get(url,verify=False)
+    return response.json()
+     
+     # we added this because we expected many errors when inputing the location into our website
+     # we asked AI what our problem was, and recommended to add this to the code
+     # this skips SSL verification, since our error was an SSL error
+     
     with urllib.request.urlopen(url) as response:
         return json.loads(response.read().decode("utf-8"))
-    
+
+    # this grabs the data from the url we provided and returns a dictionary
+
     """
     Given a properly formatted URL for a JSON web API request, return a Python JSON object containing the response to that request.
 
@@ -44,6 +53,10 @@ def get_lat_lng(place_name: str) -> tuple[str, str]:
     else:
         return None, None
     
+    # this gives us a the latitude and longitude from the place provided,
+    # using help from the MAPBOX API
+    # if the place is not found, it returns None
+    
     """
     Given a place name or address, return a (latitude, longitude) tuple with the coordinates of the given place.
 
@@ -64,6 +77,11 @@ def get_nearest_station(latitude: str, longitude: str) -> tuple[str, bool]:
         return station_name, wheelchair_accesible
     else:
         return None, None
+    
+    # using lat and long, and the MBTA url and API , this defines
+    # the nearest station to the location/place that is put as input
+    # it also indicates whether it is wheelchair friendly or not
+    # if there is no station found, it returns none
     """
     Given latitude and longitude strings, return a (station_name, wheelchair_accessible) tuple for the nearest MBTA station to the given coordinates.
 
@@ -76,6 +94,8 @@ def get_nearby_coffee (latitude: str, longitude: str) -> list:
            f"&radius=300&type=cafe&keyword=coffee&key={GOOGLE_PLACES_API}")
     data = get_json(url)
     
+    # this link specifies the chosen radius for the nearby coffee shop
+    
     coffee_shops= []
     for shop in data.get("results",[]):
         shop_name = shop.get("name")
@@ -83,6 +103,13 @@ def get_nearby_coffee (latitude: str, longitude: str) -> list:
         coffee_shops.append((shop_name, shop_adress))
     
     return coffee_shops
+
+# here is where we decided to add our WOW factor
+# we decided to also include nearby coffee shops for those
+# who want a drink before heading to their train station
+# we used Google Places API for this
+
+# word 
 
 def find_stop_near(place_name: str) -> tuple[str, bool]:
     """
@@ -102,6 +129,9 @@ def find_stop_near(place_name: str) -> tuple[str, bool]:
     else:
         return "no nearby MBTA stations" , False, []
     
+    # this code returns coffee shops and nearest MBTA station depending on the location that was inputed
+    #if location is not found, it will give an error message
+    # if there is no nearby MBTA stations, it will also return a message
     # pass
 
 
@@ -120,6 +150,12 @@ def main():
             print (f"- {shop_name}, located at {shop_adress}")
     else:
         print ("\nNo nearby coffee shops found within 300 meters")
+    
+    # this tests the function by testing out a location
+    # you input location in "place"
+    # the result will give you whether it is wheelchair friendly or not
+    # as well as giving you the nearby coffee shops within a 300 meter radius
+    
     
     # pass
 
